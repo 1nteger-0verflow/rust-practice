@@ -1,0 +1,104 @@
+{
+  "name": "rust-devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "CLAUDE_CONFIG_DIR": "/home/vscode/.claude"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "configureZshAsDefaultShell": true
+    },
+    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
+      "packages": "curl,wget,git,ca-certificates,build-essential"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
+  "runArgs": ["--init", "--rm"],
+  "hostRequirements": {
+    "gpu": "optional"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        // Util
+        "editor.tabSize": 4,
+        "editor.formatOnSave": false,
+        "debug.inlineValues": "auto",
+        "zenMode.hideLineNumbers": false,
+        "git-graph.dialog.merge.noFastForward": false,
+        "git-graph.dialog.rebase.launchInteractiveRebase": false,
+        "git-graph.dialog.rebase.ignoreDate": false,
+        "git-graph.repository.fetchAndPrune": true,
+        "files.eol": "\n",
+        // Rust
+        "[rust]": {
+          "editor.defaultFormatter": "rust-lang.rust-analyzer",
+          "editor.formatOnSave": true,
+          "editor.inlayHints.enabled": "off"
+        },
+        "rust-analyzer.server.path": "rust-analyzer",
+        "rust-analyzer.checkOnSave.enable": true,
+        "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+        // "rust-analyzer.server.path": "/usr/local/cargo/bin/rust-analyzer",
+        // Json
+        "[json][jsonc]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "prettier.tabWidth": 4,
+        // Yaml
+        "[yaml]": {
+          "editor.formatOnSave": true,
+          "editor.insertSpaces": true,
+          "editor.tabSize": 4,
+          "editor.indentSize": 2,
+          "editor.autoIndent": "advanced"
+        },
+        "cSpell.allowCompoundWords": true,
+        "cSpell.enabled": true,
+        "cSpell.words": ["tqdm"],
+        "cSpell.spellCheckOnlyWorkspaceFiles": true,
+        "cSpell.ignoreRegExpList": ["[A-Z0-9]+"],
+        // Markdown
+        "markdownlint.config": { "MD007": { "indent": 4 } },
+        "markdown.extension.tableFormatter.normalizeIndentation": true,
+        "markdown.extension.list.indentationSize": "inherit",
+        "markdown.extension.toc.levels": "2..4",
+        "[markdown]": {
+          "editor.defaultFormatter": "yzhang.markdown-all-in-one",
+          "editor.indentSize": 4,
+          "editor.tabSize": 4
+        },
+        "[tsv]": {
+          "editor.insertSpaces": false
+        },
+        "compareFolders.excludeFilter": [
+          "**/.git",
+          "**/__pycache__",
+          "**/build"
+        ]
+      },
+      "extensions": [
+        "tamasfe.even-better-toml",
+        "oderwat.indent-rainbow",
+        "mhutchie.git-graph",
+        "yzhang.markdown-all-in-one",
+        "rust-lang.rust-analyzer"
+      ]
+    }
+  },
+  "remoteUser": "vscode",
+  "containerUser": "vscode",
+  // "initializeCommand": "mkdir -p ${localEnv:HOME}/.claude && touch ${localEnv:HOME}/.claude/CLAUDE.md",
+  "mounts": [
+    // "source=shell_history-${devcontainerId},target=/shell_history,type=volume",
+    // "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind",
+    // "source=${localEnv:HOME}/.claude/CLAUDE.md,target=/home/vscode/.claude/CLAUDE.md,type=bind"
+  ]
+  // "postCreateCommand": "uv sync"
+}
