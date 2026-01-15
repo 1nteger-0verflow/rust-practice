@@ -1,8 +1,9 @@
 mod guessing_game;
+mod news;
 mod rectangle;
+use news::{Summary, Tweet};
 use rectangle::Rectangle;
 use std::collections::HashMap;
-
 use std::fs::File;
 use std::io;
 use std::io::Read;
@@ -13,9 +14,59 @@ fn read_username_from_file(path: &Path) -> Result<String, io::Error> {
     File::open(path)?.read_to_string(&mut s)?;
     Ok(s)
 }
+
+fn largest<T>(list: &[T]) -> Option<&T>
+where
+    T: PartialOrd,
+{
+    let first = list.first();
+    match first {
+        None => first,
+        Some(n) => {
+            let mut largest = n;
+            for item in list.iter() {
+                if item > largest {
+                    largest = item;
+                }
+            }
+
+            Some(largest)
+        }
+    }
+}
+
+pub fn notify<T>(item: &T)
+where
+    T: Summary,
+{
+    println!("1 new tweet: {}", item.summarize());
+}
+
+fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+    if x.len() > y.len() { x } else { y }
+}
+
 fn main() {
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
+
+    let result = longest(string1.as_str(), string2);
+    println!("The longest string is {}", result);
+
+    let number_list = vec![34, 50, 25, 100, 65];
+    match largest(&number_list) {
+        None => println!("Number list is empty"),
+        Some(n) => println!("The largest number is {}", n),
+    }
+
+    let tweet = Tweet {
+        username: String::from("horse_ebooks"),
+        content: String::from("of course, as you probably already know, people"),
+    };
+    notify(&tweet);
+
     let path = Path::new("./hello.txt");
-    let uname = read_username_from_file(path);
+    let _uname = read_username_from_file(path);
 
     let mut scores: HashMap<String, i32> = HashMap::new();
     scores.insert(String::from("Blue"), 10);
