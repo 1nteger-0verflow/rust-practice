@@ -72,6 +72,8 @@
             },
             "extensions": [
                 "rust-lang.rust-analyzer",
+                "JScearcy.rust-doc-viewer",
+                "Swellaby.vscode-rust-test-adapter",
                 "mhutchie.git-graph",
                 "tamasfe.even-better-toml",
                 "oderwat.indent-rainbow",
